@@ -90,6 +90,7 @@ void wrong_table(struct culture* cul) {
 	Line();
 }
 
+
 int main() {
 	culture cul[3];
 	cul[0] = { "Соя", "Б", "13000", "45",{3,3,2022} };
