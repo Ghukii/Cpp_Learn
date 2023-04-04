@@ -1,4 +1,4 @@
-//Вариант 5 Захаров Андрей
+//Р’Р°СЂРёР°РЅС‚ 5 Р—Р°С…Р°СЂРѕРІ РђРЅРґСЂРµР№
 #include<iostream>
 #include<string>
 using namespace std;
@@ -18,7 +18,7 @@ struct culture {
 };
 
 void Line() {
-	for (int i = 0; i < 96; i++) {
+	for (int i = 0; i < 138; i++) {
 		cout << '-';
 	}
 	cout << endl;
@@ -41,6 +41,11 @@ char* space(int n) {
 	return str;
 }
 
+void print_centr(string stroka, int line_width) {
+	int delta = (line_width - size(stroka)) / 2 - 1;
+	cout << '|' << space(delta) << stroka << space(delta);
+}
+
 void print_date(unsigned short day, unsigned short month, unsigned short year, int line_size) {
 	cout << '|';
 	int w = 10;
@@ -57,44 +62,60 @@ void print_date(unsigned short day, unsigned short month, unsigned short year, i
 	else {
 		cout << month << '.';
 	}
-	cout << year << space(delta)<<'|';
+	if (year == 0) {
+		cout << "0000" << space(delta) << '|' << endl;
+	}
+	else {
+		cout << year << space(delta) << '|' << endl;
+	}
 }
 
 void vivod(struct culture* a) {
-	cout << '|' << a->name << space(19 - size(a->name));
-	cout << '|' << a->type << space(4 - size(a->type));
-	cout << '|' << a->square << space(39 - size(a->square));
+	cout << '|' << a->name << space(20 - size(a->name));
+	cout << '|' << a->type << space(5 - size(a->type));
+	cout << '|' << a->square << space(40 - size(a->square));
 	cout << '|' << a->uroj << space(29 - size(a->uroj));
-	print_date(a->date[0], a->date[0], a->date[0], 20);
+	print_date(a->date.day, a->date.month, a->date.year, 38);
 }
 
 
-void wrong_table(struct culture* cul) {
+void table(struct culture* cul) {
 	setlocale(LC_ALL, "Russian");
 	Line();
-	cout << '|' << "Сельскохозяйственные культуры" << space(95 - size("Сельскохозяйственные культуры")) << '|' << endl;
+	cout.width(137); cout << left << "|РЎРµР»СЊСЃРєРѕС…РѕР·СЏР№СЃС‚РІРµРЅРЅС‹Рµ РєСѓР»СЊС‚СѓСЂС‹"; cout << '|' << endl;
 	Line();
-	cout << '|' << "Наименование" << space(20 - size("Наименование"));
-	cout << '|' << "Тип" << space(5 - size("Тип"));
-	cout << '|' << "Посевная площадь(га)" << space(40 - size("Посевная площадь(га)"));
-	cout << '|' << "Урожайность(ц/га)" << space(30 - size("Урожайность(ц/га)"));
-	cout << '|' << "Дата начала посевной" << space(40 - size("Дата начала посевной")) << '|' << endl;
+	print_centr("РќР°РёРјРµРЅРѕРІР°РЅРёРµ", 22);
+	print_centr("РўРёРї", 7);
+	print_centr("РџРѕСЃРµРІРЅР°СЏ РїР»РѕС‰Р°РґСЊ(РіР°)", 42);
+	print_centr("РЈСЂРѕР¶Р°Р№РЅРѕСЃС‚СЊ(С†/РіР°)", 32);
+	print_centr("Р”Р°С‚Р° РЅР°С‡Р°Р»Р° РїРѕСЃРµРІРЅРѕР№", 40);
+	cout << "|" << endl;
+
+	for (int i = 0; i < 3; i++) {
+		Line();
+		vivod(cul + i);
+	}
 	Line();
-	vivod(cul[0]);
-	Line();
-	vivod(cul[1]);
-	Line();
-	vivod(cul[2]);
-	Line();
-	cout << '|' << "Примечание: З - зерновые, Б - бобовые" << space(95 - size("Примечание: З - зерновые, Б - бобовые")) << '|' << endl;
+	cout << '|' << "РџСЂРёРјРµС‡Р°РЅРёРµ: Р— - Р·РµСЂРЅРѕРІС‹Рµ, Р‘ - Р±РѕР±РѕРІС‹Рµ" << space(137 - size("РџСЂРёРјРµС‡Р°РЅРёРµ: Р— - Р·РµСЂРЅРѕРІС‹Рµ, Р‘ - Р±РѕР±РѕРІС‹Рµ")) << '|' << endl;
 	Line();
 }
 
+void delete_date(struct culture* cul) {
+	for (int i = 0; i < 3; i++) {
+		cul[i].date.day = 0;
+		cul[i].date.month = 0;
+		cul[i].date.year = 0;
+	}
+}
 
 int main() {
-	culture cul[3];
-	cul[0] = { "Соя", "Б", "13000", "45",{3,3,2022} };
-	cul[1] = {"Чумиза", "З", "8000", "17", {3,4,2022}};
-	cul[2] = {"Рис", "З", "25650", "24", {4,3,2022}};
-	wrong_table(cul);
+	culture cul[10];
+	cul[0] = { "РЎРѕСЏ", "Р‘", "13000", "45",{3,3,2022} };
+	cul[1] = { "Р§СѓРјРёР·Р°", "Р—", "8000", "17", {3,4,2022} };
+	cul[2] = { "Р РёСЃ", "Р—", "25650", "24", {4,3,2022} };
+	table(cul);
+	delete_date(cul);
+	cout << endl << endl << endl;
+	table(cul);
+	return 0;
 }
