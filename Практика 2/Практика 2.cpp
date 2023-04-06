@@ -67,7 +67,8 @@ int main() {
 
 	vivod(A, B);
 
-
+	free(A);
+	free(B);
 
 	return 0;
 }
